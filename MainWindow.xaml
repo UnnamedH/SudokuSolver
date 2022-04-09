@@ -1,0 +1,451 @@
+﻿<Window x:Class="SudokuFix.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SudokuFix"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="grid1" Width="700" Height="400" Loaded="Load">
+        <Rectangle x:Name="MR" Fill="White" Margin="170,20" Stroke="Black" Width="360" Height="360" StrokeThickness="3" StrokeEndLineCap="Square" />
+        <Label x:Name="LN2" Content="2" HorizontalAlignment="Left" Margin="81,62,0,0" VerticalAlignment="Top" Width="50" Height="50" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0" />
+        <Label x:Name="LN4" Content="4" HorizontalAlignment="Left" Margin="81,112,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN6" Content="6" HorizontalAlignment="Left" Margin="81,162,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN8" Content="8" HorizontalAlignment="Left" Margin="81,212,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN5" Content="5" HorizontalAlignment="Left" Margin="31,162,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN7" Content="7" HorizontalAlignment="Left" Margin="31,212,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN3" Content="3" HorizontalAlignment="Left" Margin="31,112,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN1" Content="1" HorizontalAlignment="Left" Margin="31,62,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Label x:Name="LN9" Content="9" HorizontalAlignment="Left" Margin="56,262,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Rectangle x:Name="BR1" Fill="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="170,260,0,0" Stroke="Black" VerticalAlignment="Top" Width="120" StrokeThickness="0.5" />
+
+        <Grid x:Name="G1" Background="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="170,260,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label1" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label2" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label3" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label10" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label11" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label12" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label19" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label20" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label21" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G2" Background="White" HorizontalAlignment="Left" Height="120" Margin="290,260,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label4" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label5" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label6" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label13" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label14" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label15" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label22" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label23" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label24" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G3" Background="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="410,260,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label7" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label8" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label9" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label16" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label17" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label18" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label25" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label26" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label27" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G4" Background="White" HorizontalAlignment="Left" Height="120" Margin="170,140,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label28" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label29" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label30" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label37" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label38" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label39" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label46" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label47" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label48" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G5" Background="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="290,140,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label31" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label32" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label33" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label40" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label41" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label42" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label49" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label50" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label51" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G6" Background="White" HorizontalAlignment="Left" Height="120" Margin="410,140,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label34" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label35" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label36" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label43" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label44" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label45" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label52" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label53" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label54" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G7" Background="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="170,20,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label55" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label56" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label57" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label64" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label65" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label66" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label73" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label74" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label75" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G8" Background="White" HorizontalAlignment="Left" Height="120" Margin="290,20,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label58" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label59" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label60" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label67" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label68" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label69" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label76" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label77" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label78" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid x:Name="G9" Background="#FFE1E1E1" HorizontalAlignment="Left" Height="120" Margin="410,20,0,0" VerticalAlignment="Top" Width="120">
+            <Label x:Name="label61" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label62" Content="" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label63" Content="" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label70" Content="" HorizontalAlignment="Left" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label71" Content="" HorizontalAlignment="Left" Margin="40,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label72" Content="" HorizontalAlignment="Left" Margin="80,0,0,40" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label79" Content="" HorizontalAlignment="Left" Margin="0,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label80" Content="" HorizontalAlignment="Left" Margin="40,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+            <Label x:Name="label81" Content="" HorizontalAlignment="Left" Margin="80,0,0,80" VerticalAlignment="Bottom" Width="40" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="1" BorderBrush="Black" BorderThickness="0.5">
+                <Label.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1" />
+                </Label.Background>
+            </Label>
+        </Grid>
+
+        <Label x:Name="LNX" Content="X" HorizontalAlignment="Left" Margin="56,312,0,0" VerticalAlignment="Top" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" />
+        <Button x:Name="btn1" Content="Solve" HorizontalAlignment="Left" Margin="615,125,0,0" VerticalAlignment="Top" Width="75" Click="Solve_Click" />
+        <Button x:Name="ImportBtn" Content="Import" HorizontalAlignment="Left" Margin="615,185,0,0" VerticalAlignment="Top" Width="75" Click="Import_Click" />
+        <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="615,212,0,0" VerticalAlignment="Top" Width="75" Click="Export_Click" />
+    </Grid>
+</Window>
