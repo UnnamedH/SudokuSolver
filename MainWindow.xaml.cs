@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using System.IO;
 using WF = System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SudokuFix
 {
@@ -27,7 +29,8 @@ namespace SudokuFix
 
     private static string Const;
     private static int a = 1;
-    public int h = 0, p = 0;
+    private static int h = 0, p = 0;
+    private static int sleep = 4;
 
     private static List<Label> Labels = new List<Label>();
     private static List<Label> DefLabels = new List<Label>();
@@ -36,6 +39,10 @@ namespace SudokuFix
 
     private static Stack stack = new Stack();
     private static Queue<WF.MethodInvoker> queue = new Queue<WF.MethodInvoker>();
+    private static Stopwatch timer = new Stopwatch();
+
+    private static bool solved = false;
+    private static bool bench = false;
 
     public MainWindow()
     {
@@ -137,11 +144,13 @@ namespace SudokuFix
         if (lbl.Content is "")
         {
           lbl.Content = Const;
+          lbl.FontWeight = FontWeights.Bold;
         }
 
         if (Const is "X")
         {
           lbl.Content = "";
+          lbl.FontWeight = FontWeights.Regular;
         }
       }
 
@@ -176,23 +185,76 @@ namespace SudokuFix
       }
     }
 
+    private void Btn_Click(object sender, RoutedEventArgs e)
+    {
+      Button btn = sender as Button;
+
+      if (btn == BenchmarkBtn)
+      {
+        btn.Background = new SolidColorBrush(Colors.Lime);
+        NormalBtn.Background = new SolidColorBrush(Colors.Red);
+        bench = true;
+      }
+      else if (btn == NormalBtn)
+      {
+        btn.Background = new SolidColorBrush(Colors.Lime);
+        BenchmarkBtn.Background = new SolidColorBrush(Colors.Red);
+        bench = false;
+      }
+    }
+
     private void Solve_Click(object sender, RoutedEventArgs e)
     {
       DefLabels.Clear();
       MTLabels.Clear();
 
-      foreach (Label label in Labels)
+      if (!solved)
       {
-        //Console.WriteLine(label.Name);
+        foreach (Label label in Labels)
+        {
+          if (label.Content != "")
+          {
+            DefLabels.Add(label);
+            MTLabels.Remove(label);
+            label.FontWeight = FontWeights.Bold;
+          }
+          else if (label.Content == "")
+          {
+            MTLabels.Add(label);
+            DefLabels.Remove(label);
+            label.FontWeight = FontWeights.Regular;
+          }
+        }
+      }
+      else if (solved)
+      {
+        foreach (Label label in Labels)
+        {
+          if (label.FontWeight == FontWeights.Bold)
+          {
+            DefLabels.Add(label);
+          }
+          if (DefLabels.Contains(label))
+          {
+            label.Content = DefLabels[DefLabels.IndexOf(label)].Content;
+          }
+          else if (!DefLabels.Contains(label))
+          {
+            MTLabels.Add(label);
+            label.Content = "";
+          }
+        }
 
-        if (label.Content != "")
-        {
-          DefLabels.Add(label);
-        }
-        else if (label.Content == "")
-        {
-          MTLabels.Add(label);
-        }
+        solved = false;
+      }
+
+      if (bench)
+      {
+        sleep = 0;
+      }
+      else if (!bench)
+      {
+        sleep = 20;
       }
 
       Console.WriteLine(DefLabels.Count);
@@ -201,7 +263,7 @@ namespace SudokuFix
       Calculate();
     }
 
-    private void Calculate()
+    private async void Calculate()
     {
       a = 1;
       h = 0;
@@ -210,78 +272,132 @@ namespace SudokuFix
 
       label.Content = a;
 
-      Check(label);
+      if (bench) timer.Restart();
+
+      await Check(label);
     }
 
-    private void Check(Label lb)
+    private async Task Check(Label label)
     {
-      Label label = lb;
-      goto Start;
-    Start:
-      CommonLabels.Clear();
-      var p1 = VisualTreeHelper.GetParent(label) as UIElement;
-
-      int labelID = Convert.ToInt32(label.Name.Substring(5));
-      int labelY = GetLabelY(labelID);
-      int labelX = labelID % 9;
-      string labelParent = ((Grid)p1).Name;
-
-      foreach (Label lbl in Labels)
+      do
       {
-        if (lbl != label)
-        {
-          var p2 = VisualTreeHelper.GetParent(lbl) as UIElement;
-          int lblID = Convert.ToInt32(lbl.Name.Substring(5));
-          int lblY = GetLabelY(lblID);
-          int lblX = lblID % 9;
-          string lblParent = ((Grid)p2).Name;
+      LastDo:
+        CommonLabels.Clear();
+        var p1 = VisualTreeHelper.GetParent(label) as UIElement;
 
-          if (lblY == labelY || lblX == labelX || lblParent == labelParent)
+        int labelID = Convert.ToInt32(label.Name.Substring(5));
+        int labelY = GetLabelY(labelID);
+        int labelX = labelID % 9;
+        string labelParent = ((Grid)p1).Name;
+
+        foreach (Label lbl in Labels)
+        {
+          if (lbl != label)
           {
-            CommonLabels.Add(lbl);
+            var p2 = VisualTreeHelper.GetParent(lbl) as UIElement;
+            int lblID = Convert.ToInt32(lbl.Name.Substring(5));
+            int lblY = GetLabelY(lblID);
+            int lblX = lblID % 9;
+            string lblParent = ((Grid)p2).Name;
+
+            if (lblY == labelY || lblX == labelX || lblParent == labelParent)
+            {
+              CommonLabels.Add(lbl);
+            }
           }
         }
-      }
 
-    Repeat:
-      foreach (Label lbl in CommonLabels)
-      {
-        if (lbl.Content.ToString() == label.Content.ToString())
+        while (true)
         {
-          if (a >= 9)
+        Restart:
+          foreach (Label lbl in CommonLabels)
           {
-            label.Content = "";
-            h--;
-            label = MTLabels[h];
-            a = (int)label.Content;
-            a++;
-            label.Content = a;
+            if (lbl.Content.ToString() == label.Content.ToString())
+            {
+              if (a >= 9)
+              {
+                label.Content = "";
+                h--;
+                label = MTLabels[h];
+                a = (int)label.Content;
 
-            goto Start;
-          }
-          else if (a < 9)
-          {
-            a++;
-            label.Content = a;
+                if (a >= 9)
+                {
+                  label.Content = "";
+                  h--;
+                  label = MTLabels[h];
+                  a = (int)label.Content;
 
-            goto Repeat;
+                  if (a >= 9)
+                  {
+                    label.Content = "";
+                    h--;
+                    label = MTLabels[h];
+                    a = (int)label.Content;
+                    a++;
+                    label.Content = a;
+                  }
+                  else if (a < 9)
+                  {
+                    a++;
+                    label.Content = a;
+                  }
+                }
+                else if (a < 9)
+                {
+                  a++;
+                  label.Content = a;
+                }
+
+                goto GetOut;
+              }
+              else if (a < 9)
+              {
+                a++;
+                label.Content = a;
+
+                goto Restart;
+              }
+            }
           }
+          break;
         }
-      }
 
-      if (h + 1 == MTLabels.Count)
-      {
-        Console.WriteLine("Done");
-      }
-      if (h + 1 < MTLabels.Count)
-      {
-        a = 1;
-        h++;
-        label = MTLabels[h];
-        label.Content = a;
+        if (h + 1 < MTLabels.Count)
+        {
+          a = 1;
+          h++;
+          label = MTLabels[h];
 
-        goto Start;
+          label.Content = a;
+          await Task.Delay(sleep);
+
+          Console.WriteLine(label.Name, a);
+        }
+
+        if (h + 1 == MTLabels.Count)
+        {
+          a = 1;
+
+          label.Content = a;
+          Console.WriteLine(label.Name, a);
+
+          h++;
+          goto LastDo;
+        }
+
+      GetOut:
+        ;
+      } while (h + 1 < MTLabels.Count);
+
+      Console.WriteLine("Done");
+
+      if (bench)
+      {
+        timer.Stop();
+        Console.WriteLine("It took: {0:hh\\:mm\\:ss} to find the solution", timer.Elapsed);
       }
+      solved = true;
     }
 
     private int GetLabelY(int labelID)
@@ -339,17 +455,24 @@ namespace SudokuFix
 
     private void PutBoard()
     {
-      string path = @"C:\Users\Hrant\Desktop\sudokuBoard.txt";
-      string board = File.ReadAllText(path);
-
-      for (int i = 0; i < 81; i++)
+      try
       {
-        string num = board.Substring(i, 1);
+        string path = @"C:\Users\Hrant\Desktop\sudokuBoard.txt";
+        string board = File.ReadAllText(path);
 
-        if (num != "0")
+        for (int i = 0; i < 81; i++)
         {
-          Labels[i].Content = num;
+          string num = board.Substring(i, 1);
+
+          if (num != "0")
+          {
+            Labels[i].Content = num;
+            Labels[i].FontWeight = FontWeights.Bold;
+          }
         }
+      }
+      catch
+      {
       }
     }
   }
