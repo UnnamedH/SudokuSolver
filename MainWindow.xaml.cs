@@ -195,10 +195,10 @@ namespace SudokuFix
         }
       }
 
-      Calculate();
-
       Console.WriteLine(DefLabels.Count);
       Console.WriteLine(MTLabels.Count);
+
+      Calculate();
     }
 
     private void Calculate()
@@ -210,13 +210,14 @@ namespace SudokuFix
 
       label.Content = a;
 
-      queue.Enqueue(new WF.MethodInvoker(() => Check(label)));
-      queue.Dequeue()();
+      Check(label);
     }
 
-    private void Check(Label label)
+    private void Check(Label lb)
     {
-      Console.WriteLine("h");
+      Label label = lb;
+      goto Start;
+    Start:
       CommonLabels.Clear();
       var p1 = VisualTreeHelper.GetParent(label) as UIElement;
 
@@ -242,12 +243,7 @@ namespace SudokuFix
         }
       }
 
-      queue.Enqueue(new WF.MethodInvoker(() => CheckInCommon(label)));
-      queue.Dequeue()();
-    }
-
-    private void CheckInCommon(Label label)
-    {
+    Repeat:
       foreach (Label lbl in CommonLabels)
       {
         if (lbl.Content.ToString() == label.Content.ToString())
@@ -261,16 +257,14 @@ namespace SudokuFix
             a++;
             label.Content = a;
 
-            queue.Enqueue(new WF.MethodInvoker(() => Check(label)));
-            break;
+            goto Start;
           }
           else if (a < 9)
           {
             a++;
             label.Content = a;
 
-            queue.Enqueue(new WF.MethodInvoker(() => CheckInCommon(label)));
-            break;
+            goto Repeat;
           }
         }
       }
@@ -278,7 +272,6 @@ namespace SudokuFix
       if (h + 1 == MTLabels.Count)
       {
         Console.WriteLine("Done");
-        return;
       }
       if (h + 1 < MTLabels.Count)
       {
@@ -287,10 +280,8 @@ namespace SudokuFix
         label = MTLabels[h];
         label.Content = a;
 
-        queue.Enqueue(new WF.MethodInvoker(() => Check(label)));
-        return;
+        goto Start;
       }
-      queue.Dequeue()();
     }
 
     private int GetLabelY(int labelID)
