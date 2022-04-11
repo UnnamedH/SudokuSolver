@@ -22,10 +22,21 @@ namespace SudokuFix
     private static Color GrayC = Colors.Gray;
     private static Color DimGrayC = Colors.DimGray;
     private static Color LightGrayC = Colors.LightGray;
+    private static Color DarkGrayC = Colors.DarkGray;
+    private static Color BlackC = Colors.Black;
+    private static Color WhiteC = Colors.White;
+
     private static Brush Gray = new SolidColorBrush(GrayC);
     private static Brush DimGray = new SolidColorBrush(DimGrayC);
     private static Brush LightGray = new SolidColorBrush(LightGrayC);
+    private static Brush DarkGray = new SolidColorBrush(DarkGrayC);
     private static Brush Transparent = new SolidColorBrush(Colors.Transparent);
+    private static Brush Black = new SolidColorBrush(BlackC);
+    private static Brush White = new SolidColorBrush(WhiteC);
+
+    private static Brush BackCyan = new SolidColorBrush(Color.FromRgb(38, 204, 250));
+    private static Brush DCyan = new SolidColorBrush(Color.FromRgb(97, 195, 222));
+    private static Brush LCyan = new SolidColorBrush(Color.FromRgb(140, 230, 255));
 
     private static string Const;
     private static int a = 1;
@@ -78,6 +89,7 @@ namespace SudokuFix
             if (child.Name.Length >= 6)
             {
               child.Background = Transparent;
+              child.Foreground = Black;
 
               child.MouseDown += LabelClick;
               child.MouseEnter += LabelOver;
@@ -100,6 +112,7 @@ namespace SudokuFix
           if (thisLabel.Name.Length == 3)
           {
             thisLabel.Background = Transparent;
+            thisLabel.Foreground = Black;
 
             thisLabel.MouseDown += LabelClick;
             thisLabel.MouseEnter += LabelOver;
@@ -107,14 +120,14 @@ namespace SudokuFix
 
             if (thisLabel.Name is "LN1")
             {
-              thisLabel.Background = Gray;
+              thisLabel.Background = White;
               Const = "1";
             }
           }
         }
       }
 
-      PutBoard();
+      PutBoard("", false);
     }
 
     private void LabelClick(object sender, MouseButtonEventArgs e)
@@ -134,7 +147,7 @@ namespace SudokuFix
           }
         }
 
-        lbl.Background = Gray;
+        lbl.Background = White;
 
         Const = lbl.Content.ToString();
       }
@@ -145,12 +158,14 @@ namespace SudokuFix
         {
           lbl.Content = Const;
           lbl.FontWeight = FontWeights.Bold;
+          lbl.Foreground = DimGray;
         }
 
         if (Const is "X")
         {
           lbl.Content = "";
           lbl.FontWeight = FontWeights.Regular;
+          lbl.Foreground = Black;
         }
       }
 
@@ -176,7 +191,7 @@ namespace SudokuFix
 
       Label lbl = sender as Label;
 
-      if (lbl.Background == Gray)
+      if (lbl.Background == White)
       {
       }
       if (lbl.Background == LightGray)
@@ -217,12 +232,14 @@ namespace SudokuFix
             DefLabels.Add(label);
             MTLabels.Remove(label);
             label.FontWeight = FontWeights.Bold;
+            label.Foreground = DimGray;
           }
           else if (label.Content == "")
           {
             MTLabels.Add(label);
             DefLabels.Remove(label);
             label.FontWeight = FontWeights.Regular;
+            label.Foreground = Black;
           }
         }
       }
@@ -449,16 +466,46 @@ namespace SudokuFix
       {
         input = File.ReadAllText(openFileDialog.FileName);
 
-        //PutBoard();
+        PutBoard(input, true);
+      }
+      return;
+    }
+
+    private void Clear_Click(object sender, RoutedEventArgs e)
+    {
+      Clear();
+    }
+
+    private void Clear()
+    {
+      for (int i = 0; i < 81; i++)
+      {
+        Labels[i].Content = "";
+        Labels[i].FontWeight = FontWeights.Regular;
+        Labels[i].Background = Transparent;
+        Labels[i].Foreground = Black;
       }
     }
 
-    private void PutBoard()
+    private void PutBoard(string input, bool import)
     {
-      try
+      if (import)
       {
-        string path = @"C:\Users\Hrant\Desktop\sudokuBoard.txt";
-        string board = File.ReadAllText(path);
+        for (int i = 0; i < 81; i++)
+        {
+          string num = input.Substring(i, 1);
+
+          if (num != "0")
+          {
+            Labels[i].Content = num;
+            Labels[i].FontWeight = FontWeights.Bold;
+            Labels[i].Foreground = DimGray;
+          }
+        }
+      }
+      if (!import)
+      {
+        string board = "000009310060182970100003200076090035010000090920030480003900004021734050049600000";
 
         for (int i = 0; i < 81; i++)
         {
@@ -468,11 +515,9 @@ namespace SudokuFix
           {
             Labels[i].Content = num;
             Labels[i].FontWeight = FontWeights.Bold;
+            Labels[i].Foreground = DimGray;
           }
         }
-      }
-      catch
-      {
       }
     }
   }
