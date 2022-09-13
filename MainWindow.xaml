@@ -469,6 +469,5 @@
         <Button x:Name="AllClearBtn" Content="All Clear" HorizontalAlignment="Left" Margin="585,227,0,0" VerticalAlignment="Top" Width="97" Click="Clear_Click" FontSize="16" Style="{DynamicResource ButtonStyle1}" Background="#FF05076F" Foreground="White" BorderBrush="{x:Null}" FontFamily="Cascadia Mono" Height="24" />
         <Button x:Name="BenchmarkBtn" Content="Fast Solve" HorizontalAlignment="Left" Margin="557,329,0,0" VerticalAlignment="Top" Width="125" Click="Btn_Click" Background="Red" Style="{DynamicResource ButtonStyle1}" FontSize="16" Height="26" FontWeight="Bold" BorderBrush="{x:Null}" FontFamily="Cascadia Mono" />
         <Button x:Name="NormalBtn" Content="Normal Solve" HorizontalAlignment="Left" Margin="557,360,0,0" VerticalAlignment="Top" Width="125" Click="Btn_Click" Background="Lime" Style="{DynamicResource ButtonStyle1}" FontSize="16" Height="26" FontWeight="Bold" BorderBrush="{x:Null}" FontFamily="Cascadia Mono" />
-        <Label Content="Label" HorizontalAlignment="Left" Margin="585,112,0,0" VerticalAlignment="Top" Height="75" Width="97" BorderBrush="White" Foreground="White" BorderThickness="1,1,1,1"/>
     </Grid>
 </Window>

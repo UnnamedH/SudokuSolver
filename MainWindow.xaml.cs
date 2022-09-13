@@ -324,8 +324,6 @@ namespace SudokuFix
                         lbl1.Foreground = Red;
                     }
                 }
-
-                
             }
         }
         private (bool, List<int>) CheckPuzzle()
