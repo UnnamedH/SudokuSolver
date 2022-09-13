@@ -188,10 +188,8 @@ namespace SudokuFix
                 if (CheckPuzzle().Item1 == false)
                 {
                     Console.WriteLine("Error in Puzzle");
-                    ErrorFound(CheckPuzzle().Item2, CheckPuzzle().Item3, CheckPuzzle().Item4);
+                    ErrorFound(CheckPuzzle().Item2);
                     Console.WriteLine(CheckPuzzle().Item2);
-                    Console.WriteLine(CheckPuzzle().Item3);
-                    Console.WriteLine(CheckPuzzle().Item4);
                 }
                 else if (CheckPuzzle().Item1 == true)
                 {
@@ -309,24 +307,31 @@ namespace SudokuFix
             Console.WriteLine(DefLabels.Count);
             Console.WriteLine(MTLabels.Count);
 
-            
+
             Calculate();
         }
 
-        private void ErrorFound(int id1, int id2, string errcase)
+        private void ErrorFound(List<int> ConfList)
         {
-            foreach (Label lbl in DefLabels)
+            foreach (Label lbl1 in DefLabels)
             {
-                int lblID = Convert.ToInt32(lbl.Name.Substring(5));
-                
-                if (id1 == lblID || id2 == lblID)
+                int lbl1ID = Convert.ToInt32(lbl1.Name.Substring(5));
+
+                foreach (int lbl2ID in ConfList)
                 {
-                    lbl.Foreground = Red;
+                    if (lbl1ID == lbl2ID)
+                    {
+                        lbl1.Foreground = Red;
+                    }
                 }
+
+                
             }
         }
-        private (bool, int, int, string) CheckPuzzle()
+        private (bool, List<int>) CheckPuzzle()
         {
+            List<int> ConfList = new List<int>();
+
             foreach (Label lbl1 in DefLabels)
             {
                 var p1 = VisualTreeHelper.GetParent(lbl1) as UIElement;
@@ -348,14 +353,35 @@ namespace SudokuFix
                     if (lbl1ID == lbl2ID) continue;
                     if (lbl1.Content.ToString() != lbl2.Content.ToString()) continue;
 
-                    if (lbl1X == lbl2X) return (false, lbl1ID, lbl2ID, "X");
-                    if (lbl1Y == lbl2Y) return (false, lbl1ID, lbl2ID, "Y");
-                    if (lbl1Parent == lbl2Parent) return (false, lbl1ID, lbl2ID, "P");
+                    if (lbl1X == lbl2X)
+                    {
+                        ConfList.Add(lbl1ID);
+                        ConfList.Add(lbl2ID);
+                    }
+                    if (lbl1Y == lbl2Y)
+                    {
+                        ConfList.Add(lbl1ID);
+                        ConfList.Add(lbl2ID);
+                    }
+                    if (lbl1Parent == lbl2Parent)
+                    {
+                        ConfList.Add(lbl1ID);
+                        ConfList.Add(lbl2ID);
+                    }
                 }
 
             }
 
-            return (true, 0, 0, null);
+            if (ConfList.Count > 0)
+            {
+                return (false, ConfList);
+            }
+            else if (ConfList.Count == 0)
+            {
+                return (true, ConfList);
+            }
+
+            return (false, ConfList);
         }
 
         private async void Calculate()
