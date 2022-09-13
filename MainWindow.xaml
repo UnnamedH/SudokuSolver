@@ -466,8 +466,9 @@
         <Button x:Name="btn1" Content="Solve" HorizontalAlignment="Left" Margin="615,125,0,0" VerticalAlignment="Top" Width="75" Click="Solve_Click" />
         <Button x:Name="ImportBtn" Content="Import" HorizontalAlignment="Left" Margin="615,185,0,0" VerticalAlignment="Top" Width="75" Click="Import_Click" />
         <Button x:Name="ExportBtn" Content="Export" HorizontalAlignment="Left" Margin="615,212,0,0" VerticalAlignment="Top" Width="75" Click="Export_Click" />
-        <Button x:Name="BenchmarkBtn" Content="Benchmark" HorizontalAlignment="Left" Margin="588,285,0,0" VerticalAlignment="Top" Width="75" Click="Btn_Click" Background="Red" Style="{DynamicResource ButtonStyle1}" />
-        <Button x:Name="NormalBtn" Content="NormalSolve" HorizontalAlignment="Left" Margin="588,312,0,0" VerticalAlignment="Top" Width="75" Click="Btn_Click" Background="Lime" Style="{DynamicResource ButtonStyle1}" />
-        <Button x:Name="ClearBtn" Content="Clear" HorizontalAlignment="Left" Margin="615,238,0,0" VerticalAlignment="Top" Width="75" Click="Clear_Click" />
+        <Button x:Name="BenchmarkBtn" Content="Fast Solve" HorizontalAlignment="Left" Margin="588,317,0,0" VerticalAlignment="Top" Width="84" Click="Btn_Click" Background="Red" Style="{DynamicResource ButtonStyle1}" />
+        <Button x:Name="NormalBtn" Content="Normal Solve" HorizontalAlignment="Left" Margin="588,342,0,0" VerticalAlignment="Top" Width="84" Click="Btn_Click" Background="Lime" Style="{DynamicResource ButtonStyle1}" />
+        <Button x:Name="ClearBtn" Content="Clear" HorizontalAlignment="Left" Margin="615,238,0,0" VerticalAlignment="Top" Width="75" Click="ClearSolved_Click" />
+        <Button x:Name="ClearBtn_Copy" Content="All Clear" HorizontalAlignment="Left" Margin="615,263,0,0" VerticalAlignment="Top" Width="75" Click="Clear_Click" />
     </Grid>
 </Window>
