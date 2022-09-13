@@ -11,3 +11,7 @@ It is made with Visual Studio 2022 in C# using WPF
 ### The board
 It has a default sudoku board that loads when the app launches, you can import and export boards as text files.  
 The format is really simple its just a series of numbers that the app reads, 0 s as blanks and any number as the number at its respective position on the board.
+  
+### The modes
+The app has 2 solving modes "Normal Mode", enabled by default, which solves the puzzle by also showcasing each step the backtracking algorithm takes to solve the problem.  
+The "Fast Mode" is just a mode that instantly solves the puzzle.
