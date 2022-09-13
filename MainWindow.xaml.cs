@@ -25,6 +25,7 @@ namespace SudokuFix
         private static Color DarkGrayC = Colors.DarkGray;
         private static Color BlackC = Colors.Black;
         private static Color WhiteC = Colors.White;
+        private static Color RedC = Colors.Red;
 
         private static Brush Gray = new SolidColorBrush(GrayC);
         private static Brush DimGray = new SolidColorBrush(DimGrayC);
@@ -33,6 +34,7 @@ namespace SudokuFix
         private static Brush Transparent = new SolidColorBrush(Colors.Transparent);
         private static Brush Black = new SolidColorBrush(BlackC);
         private static Brush White = new SolidColorBrush(WhiteC);
+        private static Brush Red = new SolidColorBrush(RedC);
 
         private static Brush BackCyan = new SolidColorBrush(Color.FromRgb(38, 204, 250));
         private static Brush DCyan = new SolidColorBrush(Color.FromRgb(97, 195, 222));
@@ -43,10 +45,10 @@ namespace SudokuFix
         private static int h = 0, p = 0;
         private static int sleep = 4;
 
-        private static List<Label> Labels = new List<Label>();
-        private static List<Label> DefLabels = new List<Label>();
-        private static List<Label> MTLabels = new List<Label>();
-        private static List<Label> CommonLabels = new List<Label>();
+        private static List<Label> Labels = new List<Label>();          // Labels present on the board
+        private static List<Label> DefLabels = new List<Label>();       // Default labels
+        private static List<Label> MTLabels = new List<Label>();        // Empty labels
+        private static List<Label> CommonLabels = new List<Label>();    // Common labels found interfering
 
         private static Stack stack = new Stack();
         private static Queue<WF.MethodInvoker> queue = new Queue<WF.MethodInvoker>();
@@ -64,12 +66,15 @@ namespace SudokuFix
         {
             foreach (var objs in grid1.Children)
             {
+                // Get Rectangles
                 if (objs.GetType() == typeof(Rectangle))
                 {
                     Rectangle thisRect = objs as Rectangle;
 
                     Console.WriteLine(thisRect.Name);
                 }
+
+                // Get Buttons
                 if (objs.GetType() == typeof(Button))
                 {
                     Button thisBtn = objs as Button;
@@ -77,6 +82,7 @@ namespace SudokuFix
                     Console.WriteLine(thisBtn.Name);
                 }
 
+                // Get Grids
                 if (objs.GetType() == typeof(Grid))
                 {
                     Grid thisGrid = objs as Grid;
@@ -86,24 +92,28 @@ namespace SudokuFix
                     {
                         Console.WriteLine(child.Name);
 
+                        // If its a sudoku position label
                         if (child.Name.Length >= 6)
                         {
                             child.Background = Transparent;
                             child.Foreground = Black;
 
                             child.MouseDown += LabelClick;
-                            child.MouseEnter += LabelOver;
-                            child.MouseLeave += LabelOut;
+                            //child.MouseEnter += LabelOver;
+                            //child.MouseLeave += LabelOut;
 
                             if (child.Content.ToString().Length != 1)
                             {
                                 child.Content = "";
                             }
 
+                            // Add labels to List Labels
                             Labels.Add(child);
                         }
                     }
                 }
+
+                // Get number choosing Labels
                 if (objs.GetType() == typeof(Label))
                 {
                     Label thisLabel = objs as Label;
@@ -112,7 +122,9 @@ namespace SudokuFix
                     if (thisLabel.Name.Length == 3)
                     {
                         thisLabel.Background = Transparent;
-                        thisLabel.Foreground = Black;
+                        thisLabel.BorderBrush = Transparent;
+                        thisLabel.Foreground = White;
+                        thisLabel.BorderThickness = new Thickness(1, 1, 1, 1);
 
                         thisLabel.MouseDown += LabelClick;
                         thisLabel.MouseEnter += LabelOver;
@@ -120,7 +132,7 @@ namespace SudokuFix
 
                         if (thisLabel.Name is "LN1")
                         {
-                            thisLabel.Background = White;
+                            thisLabel.BorderBrush = White;
                             Const = "1";
                         }
                     }
@@ -142,30 +154,51 @@ namespace SudokuFix
                 {
                     if (label.Name.Length is 3)
                     {
-                        label.Background = Transparent;
+                        label.BorderBrush = Transparent;
                         Console.WriteLine(label.Name);
                     }
                 }
 
-                lbl.Background = White;
+                lbl.BorderBrush = White;
 
                 Const = lbl.Content.ToString();
             }
 
+            // Board Label
             if (lbl.Name.Length >= 6)
             {
+                // If empty set as number
                 if (lbl.Content is "")
                 {
                     lbl.Content = Const;
                     lbl.FontWeight = FontWeights.Bold;
                     lbl.Foreground = DimGray;
+                    DefLabels.Add(lbl);
                 }
 
+                // If X selected delete the number
                 if (Const is "X")
                 {
                     lbl.Content = "";
                     lbl.FontWeight = FontWeights.Regular;
                     lbl.Foreground = Black;
+                    DefLabels.Remove(lbl);
+                }
+
+                if (CheckPuzzle().Item1 == false)
+                {
+                    Console.WriteLine("Error in Puzzle");
+                    ErrorFound(CheckPuzzle().Item2, CheckPuzzle().Item3, CheckPuzzle().Item4);
+                    Console.WriteLine(CheckPuzzle().Item2);
+                    Console.WriteLine(CheckPuzzle().Item3);
+                    Console.WriteLine(CheckPuzzle().Item4);
+                }
+                else if (CheckPuzzle().Item1 == true)
+                {
+                    foreach (Label clrlbl in DefLabels)
+                    {
+                        clrlbl.Foreground = DimGray;
+                    }
                 }
             }
 
@@ -178,11 +211,10 @@ namespace SudokuFix
 
             Label lbl = sender as Label;
 
-            if (lbl.Background == Transparent)
-            {
-                Console.WriteLine("o");
-                lbl.Background = LightGray;
-            }
+            if (lbl.BorderBrush == White) return;
+
+            Console.WriteLine("o");
+            lbl.BorderBrush = DimGray;
         }
 
         private void LabelOut(object sender, MouseEventArgs e)
@@ -191,12 +223,12 @@ namespace SudokuFix
 
             Label lbl = sender as Label;
 
-            if (lbl.Background == White)
+            if (lbl.BorderBrush == White)
             {
             }
-            if (lbl.Background == LightGray)
+            if (lbl.BorderBrush == DimGray)
             {
-                lbl.Background = Transparent;
+                lbl.BorderBrush = Transparent;
             }
         }
 
@@ -277,7 +309,53 @@ namespace SudokuFix
             Console.WriteLine(DefLabels.Count);
             Console.WriteLine(MTLabels.Count);
 
+            
             Calculate();
+        }
+
+        private void ErrorFound(int id1, int id2, string errcase)
+        {
+            foreach (Label lbl in DefLabels)
+            {
+                int lblID = Convert.ToInt32(lbl.Name.Substring(5));
+                
+                if (id1 == lblID || id2 == lblID)
+                {
+                    lbl.Foreground = Red;
+                }
+            }
+        }
+        private (bool, int, int, string) CheckPuzzle()
+        {
+            foreach (Label lbl1 in DefLabels)
+            {
+                var p1 = VisualTreeHelper.GetParent(lbl1) as UIElement;
+
+                int lbl1ID = Convert.ToInt32(lbl1.Name.Substring(5));
+                int lbl1Y = GetLabelY(lbl1ID);
+                int lbl1X = lbl1ID % 9;
+                string lbl1Parent = ((Grid)p1).Name;
+
+                foreach (Label lbl2 in DefLabels)
+                {
+                    var p2 = VisualTreeHelper.GetParent(lbl2) as UIElement;
+
+                    int lbl2ID = Convert.ToInt32(lbl2.Name.Substring(5));
+                    int lbl2Y = GetLabelY(lbl2ID);
+                    int lbl2X = lbl2ID % 9;
+                    string lbl2Parent = ((Grid)p2).Name;
+
+                    if (lbl1ID == lbl2ID) continue;
+                    if (lbl1.Content.ToString() != lbl2.Content.ToString()) continue;
+
+                    if (lbl1X == lbl2X) return (false, lbl1ID, lbl2ID, "X");
+                    if (lbl1Y == lbl2Y) return (false, lbl1ID, lbl2ID, "Y");
+                    if (lbl1Parent == lbl2Parent) return (false, lbl1ID, lbl2ID, "P");
+                }
+
+            }
+
+            return (true, 0, 0, null);
         }
 
         private async void Calculate()
@@ -291,7 +369,16 @@ namespace SudokuFix
 
             if (fast) timer.Restart();
 
-            await Check(label);
+            try
+            {
+                await Check(label);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Solving Puzzle");
+                Console.WriteLine(ex.ToString());
+                ClearSolved();
+            }
         }
 
         private async Task Check(Label label)
@@ -488,6 +575,11 @@ namespace SudokuFix
 
         private void ClearSolved_Click(object sender, RoutedEventArgs e)
         {
+            ClearSolved();
+        }
+
+        private void ClearSolved()
+        {
             for (int i = 0; i < 81; i++)
             {
                 if (Labels[i].FontWeight == FontWeights.Bold)
@@ -530,6 +622,7 @@ namespace SudokuFix
                         Labels[i].Content = num;
                         Labels[i].FontWeight = FontWeights.Bold;
                         Labels[i].Foreground = DimGray;
+                        DefLabels.Add(Labels[i]);
                     }
                 }
             }
