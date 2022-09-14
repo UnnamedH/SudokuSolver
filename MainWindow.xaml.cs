@@ -1,19 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.IO;
 using WF = System.Windows.Forms;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace SudokuFix
 {
