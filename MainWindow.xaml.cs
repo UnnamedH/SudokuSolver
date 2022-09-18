@@ -137,6 +137,11 @@ namespace SudokuFix
                 }
             }
 
+            //foreach (Label lbl in Labels)
+            //{
+            //    lbl.Content = 
+            //}
+
             PutBoard("", false);
         }
 
@@ -165,14 +170,20 @@ namespace SudokuFix
             // Board Label
             if (lbl.Name.Length >= 6)
             {
-                // If empty set as number
-                if (lbl.Content is "")
-                {
-                    lbl.Content = Const;
-                    lbl.FontWeight = FontWeights.Bold;
-                    lbl.Foreground = DimGray;
-                    DefLabels.Add(lbl);
-                }
+                // If empty set as number // CANCELED
+                //if (lbl.Content is "")
+                //{
+                //    lbl.Content = Const;
+                //    lbl.FontWeight = FontWeights.Bold;
+                //    lbl.Foreground = DimGray;
+                //    DefLabels.Add(lbl);
+                //}
+
+                // Set as number no matter what
+                lbl.Content = Const;
+                lbl.FontWeight = FontWeights.Bold;
+                lbl.Foreground = DimGray;
+                DefLabels.Add(lbl);
 
                 // If X selected delete the number
                 if (Const is "X")
@@ -183,6 +194,7 @@ namespace SudokuFix
                     DefLabels.Remove(lbl);
                 }
 
+                // Error Finding Code
                 if (CheckPuzzle().Item1 == false)
                 {
                     Console.WriteLine("Error in Puzzle");
@@ -542,24 +554,36 @@ namespace SudokuFix
         private void Export_Click(object sender, RoutedEventArgs e)
         {
             string result = "";
-            WF.FolderBrowserDialog fbd = new WF.FolderBrowserDialog();
-            fbd.Description = "Custom Description";
+            //WF.FolderBrowserDialog fbd = new WF.FolderBrowserDialog();
+            //fbd.Description = "Custom Description";
 
-            if (fbd.ShowDialog() == WF.DialogResult.OK)
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "text files|*.txt";
+            saveFileDialog.FileName = "SudokuBoard1";
+            saveFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+
+
+            if (saveFileDialog.ShowDialog() == true)
             {
-                string selectedPath = fbd.SelectedPath;
-                selectedPath += @"\sudokuBoard.txt";
+                string selectedPath = saveFileDialog.InitialDirectory;
+                selectedPath = System.IO.Path.GetFullPath(saveFileDialog.FileName);
 
-                foreach (Label label in Labels)
+                for (int i = 1; i < 82; i++)
                 {
-                    if (label.Content == "")
+                    foreach (Label label in Labels)
                     {
-                        result += "0";
+                        if (label.Name != $"label{i}") continue;
+
+                        if (label.Content == "" || label.FontWeight != FontWeights.Bold)
+                        {
+                            result += "0";
+                        }
+                        else if (label.FontWeight == FontWeights.Bold)
+                        {
+                            result += label.Content;
+                        }
                     }
-                    else
-                    {
-                        result += label.Content;
-                    }
+
                 }
 
                 File.WriteAllText(selectedPath, result);
@@ -570,13 +594,30 @@ namespace SudokuFix
         {
             string input;
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "text files|*.txt";
+
             if (openFileDialog.ShowDialog() == true)
             {
+                Clear();
                 input = File.ReadAllText(openFileDialog.FileName);
 
                 PutBoard(input, true);
             }
-            return;
+
+            // Check Errors on import
+            if (CheckPuzzle().Item1 == false)
+            {
+                Console.WriteLine("Error in Puzzle");
+                ErrorFound(CheckPuzzle().Item2);
+                Console.WriteLine(CheckPuzzle().Item2);
+            }
+            else if (CheckPuzzle().Item1 == true)
+            {
+                foreach (Label clrlbl in DefLabels)
+                {
+                    clrlbl.Foreground = DimGray;
+                }
+            }
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -619,32 +660,49 @@ namespace SudokuFix
         {
             if (import)
             {
-                for (int i = 0; i < 81; i++)
+                for (int i = 1; i < 82; i++)
                 {
-                    string num = input.Substring(i, 1);
+                    string num = input.Substring(i - 1, 1);
 
                     if (num != "0")
                     {
-                        Labels[i].Content = num;
-                        Labels[i].FontWeight = FontWeights.Bold;
-                        Labels[i].Foreground = DimGray;
+                        foreach (Label label in Labels)
+                        {
+                            if (label.Name == $"label{i}")
+                            {
+                                label.Content = num;
+                                label.FontWeight = FontWeights.Bold;
+                                label.Foreground = DimGray;
+
+                                DefLabels.Add(label);
+                            }
+                        }
+
                     }
                 }
             }
             if (!import)
             {
-                string board = "000009310060182970100003200076090035010000090920030480003900004021734050049600000";
+                string board = "000060100009182003310970200076010920090000030035090480003021049900734600004050000";
 
-                for (int i = 0; i < 81; i++)
+                for (int i = 1; i < 82; i++)
                 {
-                    string num = board.Substring(i, 1);
+                    string num = board.Substring(i - 1, 1);
 
                     if (num != "0")
                     {
-                        Labels[i].Content = num;
-                        Labels[i].FontWeight = FontWeights.Bold;
-                        Labels[i].Foreground = DimGray;
-                        DefLabels.Add(Labels[i]);
+                        foreach (Label label in Labels)
+                        {
+                            if (label.Name == $"label{i}")
+                            {
+                                label.Content = num;
+                                label.FontWeight = FontWeights.Bold;
+                                label.Foreground = DimGray;
+
+                                DefLabels.Add(label);
+                            }
+                        }
+
                     }
                 }
             }
