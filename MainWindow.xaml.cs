@@ -179,11 +179,11 @@ namespace SudokuFix
                 //    DefLabels.Add(lbl);
                 //}
 
-                // Set as number no matter what
-                lbl.Content = Const;
-                lbl.FontWeight = FontWeights.Bold;
-                lbl.Foreground = DimGray;
-                DefLabels.Add(lbl);
+                // Set as number no matter what // CANCELED
+                //lbl.Content = Const;
+                //lbl.FontWeight = FontWeights.Bold;
+                //lbl.Foreground = DimGray;
+                //DefLabels.Add(lbl);
 
                 // If X selected delete the number
                 if (Const is "X")
@@ -194,7 +194,28 @@ namespace SudokuFix
                     DefLabels.Remove(lbl);
                 }
 
+
+                else if (Const == lbl.Content)
+                {
+                    lbl.Content = "";
+                    lbl.FontWeight = FontWeights.Regular;
+                    lbl.Foreground = Black;
+                    DefLabels.Remove(lbl);
+                }
+
+                else
+                {
+                    lbl.Content = Const;
+                    lbl.FontWeight = FontWeights.Bold;
+                    lbl.Foreground = DimGray;
+                    DefLabels.Add(lbl);
+                }
+
                 // Error Finding Code
+                foreach (Label clrlbl in DefLabels)
+                {
+                    clrlbl.Foreground = DimGray;
+                }
                 if (CheckPuzzle().Item1 == false)
                 {
                     Console.WriteLine("Error in Puzzle");
@@ -203,10 +224,11 @@ namespace SudokuFix
                 }
                 else if (CheckPuzzle().Item1 == true)
                 {
-                    foreach (Label clrlbl in DefLabels)
-                    {
-                        clrlbl.Foreground = DimGray;
-                    }
+                    // Vanity code
+                    //foreach (Label clrlbl in DefLabels)
+                    //{
+                    //    clrlbl.Foreground = DimGray;
+                    //}
                 }
             }
 
