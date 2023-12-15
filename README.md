@@ -7,6 +7,9 @@ A Website version might come later but still is not in development. This is one 
 ## More about the App
 
 It is made with Visual Studio 2022 in C# using WPF  
+
+<img src="https://github.com/UnnamedH/SudokuSolver/assets/47675080/f1a8e435-c58c-47d7-ba5a-8640f9329706" width=600>
+
   
 ### The board
 It has a default sudoku board that loads when the app launches, you can import and export boards as text files.  
